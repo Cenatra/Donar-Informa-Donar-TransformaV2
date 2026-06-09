@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulario Unificado de Inscripción y Registro a Cursos Académicos del CENATRA con guardado en la nube.">
+    <title>CENATRA | Registro al Curso</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-body" style="align-items: flex-start; padding: 50px 20px;">
+
+    <div class="login-container" style="max-width: 550px; text-align: left; margin: 0 auto;">
+        
+        <div class="login-logo" style="text-align: center;">
+            <img src="Imagenes/logo.png" alt="CENATRA Logo" style="max-width: 160px;">
+        </div>
+
+        <h2 style="text-align: center; margin-bottom: 10px;">Registro de Inscripción</h2>
+        <p style="text-align: center; color: var(--gris-texto); font-size: 0.9rem; margin-bottom: 30px;">
+            Por favor, complete sus datos profesionales para habilitar su acceso a la plataforma de capacitación en la nube.
+        </p>
+
+        <form id="formRegistroGoogle">
+            
+            <div class="form-group">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" placeholder="Ej. Dra. Alejandra Silva Pérez" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo Electrónico Institucional / Personal</label>
+                <input type="email" id="email" placeholder="ejemplo@salud.gob.mx" required>
+            </div>
+
+            <div class="form-group">
+                <label for="institucion">Institución de Adscripción / Salud</label>
+                <input type="text" id="institucion" placeholder="Ej. IMSS - Hospital General Regional No. 1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="grado">Último Grado de Estudios</label>
+                <select id="grado" style="width: 100%; padding: 12px 16px; border: 1px solid #ccd1d9; border-radius: 6px; font-size: 1rem; color: var(--negro-suave); font-family: 'Roboto', sans-serif;" required>
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="Licenciatura">Licenciatura</option>
+                    <option value="Especialidad">Especialidad Médica</option>
+                    <option value="Maestria">Maestría</option>
+                    <option value="Doctorado">Doctorado / Postdoctorado</option>
+                    <option value="Tecnico">Técnico Superior Universitario</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cargo">Cargo o Puesto Actual</label>
+                <input type="text" id="cargo" placeholder="Ej. Coordinador Hospitalario de Donación / Médico Residente" required>
+            </div>
+
+            <button type="submit" id="btnEnviar" class="btn-submit" style="margin-top: 20px;">Completar Registro e Iniciar</button>
+            
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="Cursos.html" class="back-to-home">❮ Volver al Programa del Curso</a>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        // !!! REMPLAZA ESTA URL POR LA TUYA DE APPS SCRIPT !!!
+        const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbyo5-TGe8FE2xr_Hm4PxQAc9g8eP0YWTgugRZQhO3iOj3vDdWvhZ5AhjbXT4cHH53HX/exec";
+
+        document.getElementById('formRegistroGoogle').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('btnEnviar');
+            
+            // Efecto visual: Deshabilitar el botón mientras procesa en la nube
+            btn.disabled = true;
+            btn.innerText = "Procesando registro en la nube...";
+            btn.style.backgroundColor = "#555";
+
+            // Capturar la información
+            const usuario = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                institucion: document.getElementById('institucion').value,
+                grado: document.getElementById('grado').value,
+                cargo: document.getElementById('cargo').value,
+                fecha: new Date().toLocaleString()
+            };
+
+            // Enviar datos usando Fetch API (Petición POST asíncrona)
+            fetch(URL_GOOGLE_SCRIPT, {
+                method: 'POST',
+                mode: 'no-cors', // Evita bloqueos de seguridad del navegador comunes
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(usuario)
+            })
+            .then(() => {
+                // Como usamos 'no-cors', asumimos éxito inmediato al no haber fallo de red
+                // Guardamos en memoria local para que la página del curso sepa quién entró
+                localStorage.setItem('usuarioInscrito', JSON.stringify(usuario));
+                
+                alert('¡Inscripción exitosa! Tus datos se han guardado en la base de datos de Google Sheets.');
+                window.location.href = 'Cursos.html';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un inconveniente con la conexión a la base de datos. Intente de nuevo.');
+                
+                // Restaurar botón en caso de error
+                btn.disabled = false;
+                btn.innerText = "Completar Registro e Iniciar";
+                btn.style.backgroundColor = "";
+            });
+        });
+    </script>
+
+</body>
+</html>

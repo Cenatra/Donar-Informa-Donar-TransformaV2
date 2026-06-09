@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Centro Nacional de Trasplantes (CENATRA) - Donar Informa, Donar Transforma. Información, registro y cultura de donación de órganos en México.">
+    <meta name="keywords" content="CENATRA, donación de órganos, trasplantes, Secretaría de Salud, México, salud pública">
+    <meta name="author" content="Centro Nacional de Trasplantes">
+    
+    <title>CENATRA | Donar Informa, Donar Transforma</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <button class="mobile-menu-btn" id="menuBtn">☰</button>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="#inicio">
+                <img src="Imagenes/logo.png" alt="logo">
+                <h2>DONAR INFORMA,<br>DONAR TRANSFORMA</h2>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+                
+                <li class="has-submenu">
+                    <a href="#articulos" class="nav-link dropdown-toggle" id="lecturas-btn">
+                        Lecturas de interés <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu" id="lecturas-submenu">
+                        <li><a href="Mitos.html" class="nav-link sub-link">Mitos</a></li>
+                        <li><a href="Tabues.html" class="nav-link sub-link">Tabúes</a></li>
+                        <li><a href="Sabias-que.html" class="nav-link sub-link">Sabías que...</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="Cursos.html" class="nav-link">Cursos</a></li>
+                <li><a href="Testimonios.html" class="nav-link">Testimonios</a></li>
+                
+                <li><a href="#faq" class="nav-link">Preguntas Frecuentes</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <section id="inicio" class="hero">
+            <div class="hero-logos">
+                <span style="font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px;">#PorUnMéxicoSinListaDeEspera</span>
+                <a href="login.html" class="btn-login">Iniciar Sesión</a>
+            </div>
+            <div class="hero-content">
+                <p style="font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; font-weight: 300; font-family: 'Montserrat', sans-serif;">Acervo educativo</p>
+                <h1>Donar Informa,<br>Donar Transforma</h1>
+                <h3>Centro Nacional de Trasplantes</h3>
+                <a href="#faq" class="btn-primary">Conoce más sobre la donación</a>
+            </div>
+        </section>
+
+        <!-- ====== SECCIÓN ACTUALIZADA: CARRUSEL CON ENLACES CONCRETOS ====== -->
+        <section class="carousel-section">
+            <div class="carousel-wrapper">
+                <div class="carousel-track">
+                    
+                    <!-- Slide 1: Enlace a página interna (Ejemplo: Mitos) -->
+                    <div class="carousel-slide active">
+                        <a href="Mitos.html">
+                            <img src="Imagenes/carrusel1.png" alt="Banner Cultura de Donación 1 - Ver Mitos">
+                        </a>
+                    </div>
+                    
+                    <!-- Slide 2: Enlace a otra página interna (Ejemplo: Tabúes) -->
+                    <div class="carousel-slide">
+                        <a href="Tabues.html">
+                            <img src="Imagenes/carrusel2.png" alt="Banner Cultura de Donación 2 - Ver Tabúes">
+                        </a>
+                    </div>
+                    
+                    <!-- Slide 3: Enlace a una página externa (Ejemplo: Registro Oficial del Gobierno) -->
+                    <div class="carousel-slide">
+                        <a href="https://www.donavida-cenatra.atdt.gob.mx/" target="_blank" rel="noopener noreferrer">
+                            <img src="Imagenes/carrusel3.png" alt="Banner Cultura de Donación 3 - Registro Oficial">
+                        </a>
+                    </div>
+                    
+                </div>
+                
+                <!-- Flechas de navegación -->
+                <button class="carousel-arrow prev" id="prevSlide" aria-label="Imagen Anterior">❮</button>
+                <button class="carousel-arrow next" id="nextSlide" aria-label="Siguiente Imagen">❯</button>
+                
+                <!-- Puntos indicadores inferiores -->
+                <div class="carousel-indicators">
+                    <span class="indicator active" data-index="0"></span>
+                    <span class="indicator" data-index="1"></span>
+                    <span class="indicator" data-index="2"></span>
+                </div>
+            </div>
+        </section>
+        <!-- ============================================================ -->
+
+        <section id="mision" class="mision container">
+            <h2 class="section-title">Nuestra Misión</h2>
+            <p class="mision-text">
+                El Centro Nacional de Trasplantes es el órgano responsable de impulsar y coordinar los procesos desde la donación hasta el trasplante de órganos, tejidos y células, desarrollando el marco regulatorio para favorecer el desempeño de los integrantes del Subsistema Nacional de Donación y Trasplantes, otorgando a los pacientes que así lo requieran una mayor oportunidad con legalidad y seguridad.
+            </p>
+        </section>
+
+        <section id="vision" class="vision container">
+            <h2 class="section-title">Nuestra Visión</h2>
+            <p class="mision-text">
+                Ser el órgano rector que dirija, coordine y regule la actividad de donación y trasplantes de órganos y tejidos en el Subsistema Nacional de Donación y Trasplantes en México, destacando ante el Sistema Nacional de Salud, con mayores cifras de pacientes beneficiados, dentro de estándares de calidad, equidad, altruismo y justicia.
+            </p>
+        </section>
+
+        <section id="articulos" class="articulos container">
+            <h2 class="section-title">Lecturas de interés</h2>
+            <div class="grid-cards">
+                
+                <article id="card-mitos" class="card">
+                    <div class="card-img">
+                        <img src="Imagenes/Mitos.png" alt="Mitos">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Mitos</span>
+                        <h3 class="card-title">Aclaremos la información.</h3>
+                        <p class="card-text">Desmentimos creencias falsas y respondemos las dudas más comunes sobre la donación y el trasplante de órganos.</p>
+                        <a href="Mitos.html" class="btn-outline">Leer más</a>
+                    </div>
+                </article>
+
+                <article id="card-tabues" class="card">
+                    <div class="card-img">
+                        <img src="Imagenes/Tabues.png" alt="Tabues">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Tabúes</span>
+                        <h3 class="card-title">Hablemos de lo que pocas veces se conversa.</h3>
+                        <p class="card-text">Exploramos temas sensibles, miedos y barreras culturales que influyen en la decisión de donar.</p>
+                        <a href="Tabues.html" class="btn-outline">Leer más</a>
+                    </div>
+                </article>
+
+                <article id="card-sabias-que" class="card">
+                    <div class="card-img">
+                        <img src="Imagenes/Sabias que.png" alt="Sabías que...">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Sabías que...</span>
+                        <h3 class="card-title">Datos, historias y hechos que inspiran.</h3>
+                        <p class="card-text">Descubre información relevante, testimonios reales sobre la donación y los trasplantes.</p>
+                        <a href="Sabias-que.html" class="btn-outline">Leer más</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="equipo" class="equipo container">
+            <h2 class="section-title">Directorio Institucional</h2>
+            <div class="grid-cards team-grid">
+                <div class="team-card">
+                    <div class="team-img">
+                        <img src="Imagenes/Dra.Rosa Erro.png" alt="Dra. Rosa Erro">
+                    </div>
+                    <h3 class="team-title">Dra. Rosa Erro Aboytia</h3>
+                    <p class="team-role">Director General</p>
+                    <p class="team-desc">Centro Nacional de Trasplantes</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="preguntas container">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            <div class="faq-container">
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4>¿Qué es la donación de órganos?</h4>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><br>Es la toma de órganos y tejidos sanos de una persona para trasplantarlos a otras personas que los necesitan para salvar o mejorar su calidad de vida. Es un acto altruista, solidario y gratuito.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4>¿Quién puede donar?</h4>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><br>En vida, hombres y mujeres mayores de 18 años que se encuentren sanos. Después de la vida, se consideran potenciales donadores a personas de entre 2 y 80 años, dependiendo de la evaluación médica en el momento del deceso.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4>¿Cómo puedo registrarme como donante voluntario?</h4>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><br>Puedes registrarte obteniendo tu Tarjeta de Donador Voluntario a través del portal oficial del CENATRA, o firmando el Documento Oficial de Donación. Sin embargo, lo más importante es comunicar tu decisión a tu familia.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4>¿Al final, mi familia es quien decide?</h4>
+                        <span class="icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><br>Sí. De acuerdo con la Ley General de Salud en México, aunque cuentes con tu tarjeta de donador, al momento del fallecimiento se pedirá el consentimiento de los familiares directos. Por eso es vital que ellos conozcan tu voluntad de donar.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer id="contacto" class="footer">
+            <div class="footer-grid">
+                
+                <div class="footer-col">
+                    <h4>CENATRA</h4>
+                    <p>Centro Nacional de Trasplantes.<br>Secretaría de Salud.<br>Gobierno de México.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/cenatra.salud.gob" aria-label="Facebook">Facebook</a>
+                        <a href="https://x.com/cenatra_mx" aria-label="Twitter">X</a>
+                        <a href="https://www.instagram.com/cenatra_mx" aria-label="Instagram">Instagram</a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contacto Institucional</h4>
+                    <p><strong>Dirección:</strong> Periferico Sur 2767, San Jerónimo Lídice, La Magdalena Contreras, 10200 Ciudad de México, CDMX</p>
+                    <p><strong>Teléfono:</strong> 55 5487 9902</p>
+                    <p><strong>Email:</strong> cenatra@salud.gob.mx</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="https://www.donavida-cenatra.atdt.gob.mx/">Registro de Donadores</a></li>
+                        <li><a href="https://www.gob.mx/cenatra#13559">Estadísticas Nacionales</a></li>
+                        <li><a href="https://www.gob.mx/cenatra/documentos/aviso-de-privacidad-integrales-340062">Marco Legal</a></li>
+                        <li><a href="#">Aviso de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Centro Nacional de Trasplantes. Todos los derechos reservados. Sitio institucional educativo.</p>
+            </div>
+        </footer>
+
+    </main>
+
+</body>
+</html>

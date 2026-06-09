@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonios de Vida | CENATRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <button class="mobile-menu-btn" id="menuBtn">☰</button>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html">
+                <img src="Imagenes/logo.png" alt="logo">
+                <h2>DONAR INFORMA,<br>DONAR TRANSFORMA</h2>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="index.html#inicio" class="nav-link">Inicio</a></li>
+                <li class="has-submenu">
+                    <a href="index.html#articulos" class="nav-link dropdown-toggle" id="lecturas-btn">
+                        Lecturas de interés <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu" id="lecturas-submenu">
+                        <li><a href="Mitos.html" class="nav-link sub-link">Mitos</a></li>
+                        <li><a href="Tabues.html" class="nav-link sub-link">Tabúes</a></li>
+                        <li><a href="Sabias-que.html" class="nav-link sub-link">Sabías que...</a></li>
+                    </ul>
+                </li>
+                <li><a href="Cursos.html" class="nav-link">Cursos</a></li>
+                <li><a href="Testimonios.html" class="nav-link active">Testimonios</a></li>
+                <li><a href="index.html#faq" class="nav-link">Preguntas Frecuentes</a></li>
+                <li><a href="index.html#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <section class="page-header" style="background-color: var(--azul-institucional); color: white; padding: 60px 20px; text-align: center;">
+            <h1 style="font-size: 3rem; margin-bottom: 10px;">Testimonios</h1>
+            <p style="font-size: 1.2rem; font-weight: 300;">Historias reales de pacientes y familias transformadas por el altruismo.</p>
+        </section>
+
+        <section class="blog-posts container">
+            
+            <article class="post-item" style="background: white; padding: 30px; border-radius: 8px; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <span style="color: var(--verde-salud); font-weight: bold; font-size: 0.9rem;">Historia de Éxito</span>
+                <h2 style="color: var(--azul-institucional); margin: 10px 0;">"Volver a nacer gracias a un trasplante de córnea"</h2>
+                <p style="color: var(--gris-texto); margin-bottom: 20px;">Conoce la emotiva historia de pacientes mexicanos que recuperaron la vista y sus proyectos de vida gracias a la decisión solidaria de familias donantes.</p>
+                <a href="#" class="btn-outline">Leer historia completa</a>
+            </article>
+
+        </section>
+    </main>
+</body>
+</html>

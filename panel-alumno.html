@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Alumno | CENATRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F4F6F9;
+            color: #222;
+        }
+
+        /* ── TOPBAR ── */
+        .topbar {
+            background-color: #112A46;
+            color: #fff;
+            padding: 0 30px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .topbar-left img {
+            height: 36px;
+        }
+
+        .topbar-left span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(255,255,255,0.08);
+            padding: 6px 14px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #007663;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-logout {
+            background-color: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* ── LAYOUT ── */
+        .dashboard {
+            margin-top: 60px;
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* ── SIDEBAR ── */
+        .dash-sidebar {
+            width: 240px;
+            background-color: #1A3E68;
+            color: #fff;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            bottom: 0;
+            padding: 25px 0;
+            overflow-y: auto;
+        }
+
+        .dash-sidebar ul {
+            list-style: none;
+        }
+
+        .dash-sidebar ul li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 25px;
+            color: #b0c4de;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .dash-sidebar ul li a:hover,
+        .dash-sidebar ul li a.active {
+            background-color: rgba(255,255,255,0.08);
+            color: #fff;
+            border-left: 3px solid #007663;
+        }
+
+        .dash-sidebar ul li a svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
+        .sidebar-section {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.35);
+            padding: 20px 25px 8px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ── MAIN CONTENT ── */
+        .dash-main {
+            margin-left: 240px;
+            flex: 1;
+            padding: 30px;
+        }
+
+        /* ── BIENVENIDA ── */
+        .welcome-banner {
+            background: linear-gradient(135deg, #112A46 0%, #007663 100%);
+            color: #fff;
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-banner h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .welcome-banner p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        .welcome-badge {
+            background-color: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 14px 20px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .welcome-badge .num {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .welcome-badge .label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* ── STAT CARDS ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .stat-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .stat-icon.green  { background-color: #e1f5ee; }
+        .stat-icon.blue   { background-color: #e6f1fb; }
+        .stat-icon.amber  { background-color: #faeeda; }
+        .stat-icon.purple { background-color: #eeedfe; }
+
+        .stat-info .num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            color: #112A46;
+            line-height: 1;
+        }
+
+        .stat-info .label {
+            font-size: 0.82rem;
+            color: #888;
+            margin-top: 3px;
+        }
+
+        /* ── SECTION TITLE ── */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .section-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.15rem;
+            color: #112A46;
+            font-weight: 700;
+        }
+
+        .ver-todos {
+            font-size: 0.85rem;
+            color: #007663;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ── COURSE CARDS ── */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .course-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .course-thumb {
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .course-thumb svg {
+            width: 48px;
+            height: 48px;
+            opacity: 0.9;
+        }
+
+        .course-thumb .badge-nuevo {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: #007663;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .course-thumb .badge-progreso {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: #1A3E68;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .course-body {
+            padding: 18px 20px;
+        }
+
+        .course-category {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #007663;
+            margin-bottom: 6px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .course-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #112A46;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .course-meta {
+            font-size: 0.82rem;
+            color: #888;
+            display: flex;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .course-meta svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        /* Progress bar */
+        .progress-wrap {
+            margin-bottom: 14px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #007663;
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        .btn-curso {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-curso.primary {
+            background-color: #007663;
+            color: #fff;
+        }
+
+        .btn-curso.primary:hover {
+            background-color: #009D84;
+        }
+
+        .btn-curso.outline {
+            background-color: transparent;
+            border: 2px solid #007663;
+            color: #007663;
+        }
+
+        .btn-curso.outline:hover {
+            background-color: #007663;
+            color: #fff;
+        }
+
+        /* ── ACTIVIDAD RECIENTE ── */
+        .activity-list {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .activity-dot.green  { background-color: #007663; }
+        .activity-dot.blue   { background-color: #1A3E68; }
+        .activity-dot.amber  { background-color: #BA7517; }
+
+        .activity-text {
+            flex: 1;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .activity-text strong {
+            color: #112A46;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #aaa;
+            white-space: nowrap;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .dash-sidebar { display: none; }
+            .dash-main { margin-left: 0; padding: 20px 15px; }
+            .welcome-banner { flex-direction: column; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <img src="Imagenes/logo.png" alt="CENATRA">
+            <span>CENATRA | Acervo Educativo</span>
+        </div>
+        <div class="topbar-right">
+            <div class="user-badge">
+                <div class="user-avatar" id="userAvatar">--</div>
+                <span id="userNombre">Cargando...</span>
+            </div>
+            <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <div class="dashboard">
+
+        <!-- SIDEBAR -->
+        <aside class="dash-sidebar">
+            <p class="sidebar-section">Principal</p>
+            <ul>
+                <li>
+                    <a href="panel-alumno.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                        Mi panel
+                    </a>
+                </li>
+                <li>
+                    <a href="Cursos.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        Cursos
+                    </a>
+                </li>
+                <li>
+                    <a href="Mitos.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        Lecturas
+                    </a>
+                </li>
+                <li>
+                    <a href="Testimonios.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Testimonios
+                    </a>
+                </li>
+            </ul>
+
+            <p class="sidebar-section">Información</p>
+            <ul>
+                <li>
+                    <a href="index.html#faq">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        Preguntas frecuentes
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#contacto">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        Contacto
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="dash-main">
+
+            <!-- Bienvenida -->
+            <div class="welcome-banner">
+                <div>
+                    <h2>¡Bienvenido, <span id="welcomeNombre">alumno</span>!</h2>
+                    <p>Continúa tu formación en donación y trasplantes de órganos.</p>
+                </div>
+                <div style="display:flex; gap:14px;">
+                    <div class="welcome-badge">
+                        <div class="num">7</div>
+                        <div class="label">Módulos disponibles</div>
+                    </div>
+                    <div class="welcome-badge">
+                        <div class="num">0</div>
+                        <div class="label">Completados</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#007663" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="num">0%</div>
+                        <div class="label">Progreso general</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="num">1</div>
+                        <div class="label">Cursos inscritos</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon amber">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#BA7517" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="num">0</div>
+                        <div class="label">Certificados</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="num">3</div>
+                        <div class="label">Lecturas disponibles</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mis cursos -->
+            <div class="section-header">
+                <h3>Mis cursos</h3>
+                <a href="Cursos.html" class="ver-todos">Ver todos →</a>
+            </div>
+
+            <div class="courses-grid">
+
+                <!-- Curso 1 -->
+                <div class="course-card">
+                    <div class="course-thumb" style="background-color: #e1f5ee;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#007663" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        <span class="badge-nuevo">Nuevo</span>
+                    </div>
+                    <div class="course-body">
+                        <p class="course-category">Capacitación profesional</p>
+                        <h4 class="course-title">Formación en Procesos de Donación y Trasplantes</h4>
+                        <div class="course-meta">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                7 módulos
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                Profesionales de salud
+                            </span>
+                        </div>
+                        <div class="progress-wrap">
+                            <div class="progress-label">
+                                <span>Progreso</span>
+                                <span>0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <a href="Cursos.html" class="btn-curso primary">Comenzar curso</a>
+                    </div>
+                </div>
+
+                <!-- Curso 2 (próximamente) -->
+                <div class="course-card" style="opacity: 0.7; cursor: default; pointer-events: none;">
+                    <div class="course-thumb" style="background-color: #eeedfe;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.11h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l1.27-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <span style="position:absolute; top:12px; right:12px; background:#888; color:#fff; font-size:0.7rem; font-weight:700; padding:3px 10px; border-radius:20px; font-family:'Montserrat',sans-serif;">Próximamente</span>
+                    </div>
+                    <div class="course-body">
+                        <p class="course-category">Comunicación y familia</p>
+                        <h4 class="course-title">Estrategias de Comunicación con Familias Donantes</h4>
+                        <div class="course-meta">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                En desarrollo
+                            </span>
+                        </div>
+                        <div class="progress-wrap">
+                            <div class="progress-label"><span>Disponible pronto</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%; background-color:#888;"></div>
+                            </div>
+                        </div>
+                        <button class="btn-curso outline" disabled style="opacity:0.5; cursor:not-allowed;">Próximamente</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Lecturas recientes -->
+            <div class="section-header">
+                <h3>Lecturas de interés</h3>
+                <a href="Mitos.html" class="ver-todos">Ver todas →</a>
+            </div>
+
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-dot green"></div>
+                    <div class="activity-text">
+                        <strong>Mitos</strong> — "¿Es verdad que si me registran como donante pueden robar mis órganos?"
+                    </div>
+                    <a href="M2-0106.html" style="font-size:0.82rem; color:#007663; font-weight:600; text-decoration:none; white-space:nowrap;">Leer →</a>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot blue"></div>
+                    <div class="activity-text">
+                        <strong>Mitos</strong> — "Donar no afecta el tratamiento médico"
+                    </div>
+                    <a href="M2-3105.html" style="font-size:0.82rem; color:#007663; font-weight:600; text-decoration:none; white-space:nowrap;">Leer →</a>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot amber"></div>
+                    <div class="activity-text">
+                        <strong>Tabúes</strong> — "Por mi edad o estado de salud, seguro no puedo donar"
+                    </div>
+                    <a href="T1-0226.html" style="font-size:0.82rem; color:#007663; font-weight:600; text-decoration:none; white-space:nowrap;">Leer →</a>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot green"></div>
+                    <div class="activity-text">
+                        <strong>Sabías que...</strong> — "Un solo donante puede salvar o mejorar la vida de más de 80 personas"
+                    </div>
+                    <a href="S1-0806.html" style="font-size:0.82rem; color:#007663; font-weight:600; text-decoration:none; white-space:nowrap;">Leer →</a>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCdXozQ4UWMQ5DAMt_MUMM8x3hLzELR1-E",
+            authDomain: "cenatra-acervo.firebaseapp.com",
+            projectId: "cenatra-acervo",
+            storageBucket: "cenatra-acervo.firebasestorage.app",
+            messagingSenderId: "1029702120121",
+            appId: "1:1029702120121:web:ad5ed1c97963eb86bf2168"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Verificar sesión activa
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const email = user.email;
+                const nombre = email.split('@')[0].replace(/\./g, ' ');
+                const nombreCapitalizado = nombre.charAt(0).toUpperCase() + nombre.slice(1);
+                const iniciales = nombre.substring(0, 2).toUpperCase();
+
+                document.getElementById('userNombre').textContent = nombreCapitalizado;
+                document.getElementById('welcomeNombre').textContent = nombreCapitalizado;
+                document.getElementById('userAvatar').textContent = iniciales;
+            } else {
+                // No hay sesión, redirigir al login
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Cerrar sesión
+        document.getElementById('btnLogout').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                sessionStorage.removeItem('usuarioLogueado');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+
+</body>
+</html>

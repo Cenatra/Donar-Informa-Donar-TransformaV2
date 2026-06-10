@@ -8,30 +8,106 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="login-body">
-
     <div class="login-container">
         <div class="login-logo">
             <img src="Imagenes/logo.png" alt="Logo CENATRA">
         </div>
-        
+
         <h2>Acceso al Acervo</h2>
-        
-        <form action="#" method="POST">
+
+        <div id="mensaje-error" style="
+            display: none;
+            background-color: #fdecea;
+            color: #c0392b;
+            border: 1px solid #e74c3c;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-family: 'Roboto', sans-serif;
+        "></div>
+
+        <form id="loginForm">
             <div class="form-group">
-                <label for="username">Usuario o Correo Electrónico</label>
-                <input type="text" id="username" name="username" placeholder="ejemplo@salud.gob.mx" required autocomplete="username">
+                <label for="username">Correo Electrónico</label>
+                <input type="email" id="username" placeholder="ejemplo@salud.gob.mx" required autocomplete="username">
             </div>
-            
+
             <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+                <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
             </div>
-            
+
             <button type="submit" class="btn-submit">Ingresar</button>
         </form>
-        
+
         <a href="index.html" class="back-to-home">← Volver al Inicio</a>
     </div>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCdXozQ4UWMQ5DAMt_MUMM8x3hLzELR1-E",
+            authDomain: "cenatra-acervo.firebaseapp.com",
+            projectId: "cenatra-acervo",
+            storageBucket: "cenatra-acervo.firebasestorage.app",
+            messagingSenderId: "1029702120121",
+            appId: "1:1029702120121:web:ad5ed1c97963eb86bf2168"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Si ya hay sesión activa, mandar directo al panel
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.location.href = 'panel-alumno.html';
+            }
+        });
+
+        const mensajeError = document.getElementById('mensaje-error');
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const btn = document.querySelector('.btn-submit');
+            btn.disabled = true;
+            btn.textContent = "Verificando...";
+            btn.style.backgroundColor = "#555";
+            mensajeError.style.display = 'none';
+
+            const email = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    sessionStorage.setItem('usuarioLogueado', JSON.stringify({
+                        email: user.email,
+                        uid: user.uid
+                    }));
+                    window.location.href = 'panel-alumno.html';
+                })
+                .catch((error) => {
+                    let mensaje = 'Usuario o contraseña incorrectos. Intenta de nuevo.';
+
+                    if (error.code === 'auth/too-many-requests') {
+                        mensaje = 'Demasiados intentos fallidos. Espera unos minutos e intenta de nuevo.';
+                    } else if (error.code === 'auth/network-request-failed') {
+                        mensaje = 'Error de conexión. Verifica tu internet e intenta de nuevo.';
+                    } else if (error.code === 'auth/invalid-email') {
+                        mensaje = 'El formato del correo electrónico no es válido.';
+                    }
+
+                    mensajeError.textContent = mensaje;
+                    mensajeError.style.display = 'block';
+                    btn.disabled = false;
+                    btn.textContent = "Ingresar";
+                    btn.style.backgroundColor = "";
+                });
+        });
+    </script>
 </body>
 </html>
